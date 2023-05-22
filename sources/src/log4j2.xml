@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<Configuration status="WARN">
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%5p [%t] %logger{36} %m%n"/>
+		</Console>
+	</Appenders>
+	<Loggers>
+		<!-- 全局日志配置 -->
+		<Root level="debug">
+			<AppenderRef ref="Console"/>
+		</Root>
+	</Loggers>
+</Configuration>

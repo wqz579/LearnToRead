@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.wqz.learntoread.dao.ReadMapper">
+	<!-- 默认用MyBatis的同名映射策略 -->
+	<select id="viewUnknownWordsByUserId" resultType="CharsToLearn">
+		select c.c_id id, c.c_name name from characters_table c
+		left join read_table r
+		on r.word_id=c.c_id
+		where r.user_id = #{userId} and r.known_status=false
+		order by r.new_word_record_time
+	</select>
+	
+	<!-- 默认用MyBatis的同名映射策略 -->
+	<select id="viewKnownWordsByUserId" resultType="CharsToLearn">
+		select c.c_id id, c.c_name name from characters_table c
+		left join read_table r
+		on r.word_id=c.c_id
+		where r.user_id = #{userId} and r.known_status=true
+		order by r.new_word_record_time
+	</select>
+	
+	<!-- 默认用MyBatis的同名映射策略 -->
+	<select id="viewUnmarkedWordsByUserId" resultType="CharsToLearn">
+		select c.c_id id, c.c_name name from characters_table c
+		where c_id not in
+		(select word_id from read_table where user_id=#{userId})
+	</select>
+	
+	<select id="viewReadWordById" resultType="ReadRecord">
+		select user_id userId, word_id wordId, known_status knownStatus 
+		from read_table
+		where user_id = #{param1} and word_id=#{param2}
+	</select>
+	
+	<update id="updateKnownStatus">
+		update read_table
+		set known_status=#{knownStatus},new_word_record_time=#{newWordRecordTime}
+		where user_id=#{userId} and word_id=#{wordId} 
+	</update>
+	
+	<insert id="insertReadRecords">
+		insert into read_table
+		values (#{userId},#{wordId},#{knownStatus},#{newWordRecordTime}) 
+	</insert>
+
+</mapper>	

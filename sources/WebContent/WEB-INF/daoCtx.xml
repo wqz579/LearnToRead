@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	https://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	https://www.springframework.org/schema/context/spring-context.xsd
+	http://mybatis.org/schema/mybatis-spring
+	http://mybatis.org/schema/mybatis-spring.xsd">
+	
+	<context:component-scan base-package="org.wqz.learntoread.dao"/>
+	
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close"
+		p:driverClass="com.mysql.cj.jdbc.Driver"
+		p:jdbcUrl="jdbc:mysql://localhost:3306/learn_to_read?serverTimezone=UTC"
+		p:user="root"
+		p:password="579168"/>
+	
+	
+	<!-- 使用SqlSessionFactoryBean来配置SqlSessionFactory -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="dataSource"
+		p:typeAliasesPackage="org.wqz.learntoread.domain"/> 
+		
+	
+	<!-- 程序配置使用自动扫描来识别容器中所有Mapper组件
+	让程序自动扫描org.crazyit.app.dao包所有的Mapper组件
+	 -->
+	<mybatis:scan base-package="org.wqz.learntoread.dao"/>
+		
+</beans>
+
