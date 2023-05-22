@@ -118,4 +118,18 @@ public class ReadController
 		else
 			return "redirect:/unknownWords";
 	}
+	
+	@PostMapping("/updateDate/{id}")
+	public String updateDate(@PathVariable("id") Integer wordId,@SessionAttribute ("userId") Integer userId)
+	{
+		Date date = new Date();
+		ReadRecord rr= readService.viewReadWordById(userId,wordId);
+		rr.setNewWordRecordTime(date);
+		readService.updateKnownStatus(rr);
+		//返回修改前的界面
+		if(rr.getKnownStatus()==true)	
+			return "redirect:/knownWords";			
+		else
+			return "redirect:/unknownWords";
+	}
 }

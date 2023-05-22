@@ -34,19 +34,31 @@ ${flag}${count}
 	<thead>
 		<tr>
 			<th scope="col">序号</th>
+			<th scope="col">前次记录时间</th>
 			<th scope="col">字表</th>
-			<th scope="col">操作</th>
+			<th scope="col">修改认识状态</th>
+			<th scope="col">复习</th>
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach items="${words}" var="c">
+		<c:forEach items="${words}" var="c" end="9">
 			<tr>
+				<td scope="col"></td>
 				<td scope="col"></td>
 				<td scope="col"><img src="${pageContext.request.contextPath}/printChars/${c.id}"></td>
 				<td scope="col">
-					<form method="post" action="updateKnownStatus/${c.id}">
-						<button type="submit" >修改为：${status}</button>
-					</form>
+					<div class="col-sm-12 text-center">
+						<form method="post" action="updateKnownStatus/${c.id}">
+							<button type="submit" class="btn btn-danger">修改为：${status}</button>
+						</form>
+					</div>
+				</td>
+				<td scope="col">
+					<div class="col-sm-12 text-center">
+						<form method="post" action="updateDate/${c.id}">
+							<button type="submit" class="btn btn-success">已复习</button>
+						</form>
+					</div>
 				</td>			
 			</tr>
 		</c:forEach>
