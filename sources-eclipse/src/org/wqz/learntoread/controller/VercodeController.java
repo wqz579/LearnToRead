@@ -65,6 +65,18 @@ public class VercodeController {
 			// 将随机字符绘制在图片上
 			g.drawString(c + "", 30 * i + 10, 35);
 		}
+		for(int i=0;i<15;i++)
+		{
+			int rr=rnd.nextInt(255);
+			int gg=rnd.nextInt(255);
+			int bb=rnd.nextInt(255);
+			int x1=rnd.nextInt(20);
+			int y1=rnd.nextInt(50);
+			int x2=rnd.nextInt(20)+180;
+			int y2=rnd.nextInt(50);
+			g.setColor(new Color(rr,gg,bb));
+			g.drawLine(x1, y1, x2, y2);
+		}
 		// 将生成的随机验证码保存为session的属性，便于在UserController中控制用户登录
 		session.setAttribute("vercode", rndStr.toString());
 		// 将图片内容输出到指定IO流
