@@ -12,6 +12,12 @@
 	src="${pageContext.request.contextPath}/res/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" 
 	src="${pageContext.request.contextPath}/res/bootstrap-4.3.1/js/bootstrap.js"></script>
+<script type=text/javascript>
+	function toggle(id){
+	var tb=document.getElementById(id);
+	tb.style.display=(tb.style.display=='none')?'block':'none';
+	}
+</script>
 <title>个人中心</title>
 </head>
 <body>
@@ -35,7 +41,8 @@ ${flag}${count}
 		<tr>
 			<th scope="col">序号</th>
 			<th scope="col">前次记录时间</th>
-			<th scope="col">字表</th>
+			<th scope="col">拼音</th>
+			<th scope="col">生字</th>
 			<th scope="col">修改认识状态</th>
 			<th scope="col">复习</th>
 		</tr>
@@ -45,7 +52,11 @@ ${flag}${count}
 			<tr>
 				<td scope="col"></td>
 				<td scope="col"></td>
-				<td scope="col"><img src="${pageContext.request.contextPath}/printChars/${c.id}"></td>
+				<td scope="col" width="150">
+					<div style="cursor:hand" onclick="toggle('pinyin${c.id}')"><b>拼音</b></div>
+					<div id="pinyin${c.id}" style="display:none; font-size:80px">${c.name.substring(1)}</div>
+				</td>
+				<td scope="col" style="font-size:200px;color=green;text-algn:center;font-family:黑体">${c.name.substring(0,1)}</td>
 				<td scope="col">
 					<div class="col-sm-12 text-center">
 						<form method="post" action="updateKnownStatus/${c.id}">
