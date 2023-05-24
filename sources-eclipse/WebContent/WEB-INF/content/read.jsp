@@ -25,6 +25,7 @@
 <img alt="学前识字" src="${pageContext.request.contextPath}/imgs/XueQianShiZi_Logo.png">
 ${sessionScope.currentUserName},欢迎您，登录成功！<br>
 <a href="${pageContext.request.contextPath}/userForm" >个人中心</a><br>
+<a href="${pageContext.request.contextPath}/logout" >退出登录</a><br>
 ${flag}${count}
 <!-- 此处需要迭代、显示所有生字 -->
 <table class="table table-hover">

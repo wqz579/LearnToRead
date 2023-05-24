@@ -89,4 +89,12 @@ public class UserController
 		}
 		return "loginForm";
 	}
+	
+	//退出登录请求，返回登录页面
+	@GetMapping("/logout")
+	public String logout(HttpSession session)
+	{
+		session.removeAttribute("userId");
+		return "redirect:/loginForm";
+	}
 }

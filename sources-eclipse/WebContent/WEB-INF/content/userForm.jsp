@@ -26,6 +26,7 @@
 ${sessionScope.currentUserName}，欢迎进入个人中心
 <br>
 <a href="${pageContext.request.contextPath}/read">识字页面</a><br>
+<a href="${pageContext.request.contextPath}/logout" >退出登录</a><br>
 <div class="form-group row">
 <form method="get" action="knownWords">
 	<button type="submit" >已经认识</button>
