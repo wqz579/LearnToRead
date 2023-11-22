@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户注册页面</title>
+    <!--导入bootstrap的webjars中的css样式-->
+    <link rel="stylesheet" th:href="@{'/webjars/bootstrap/css/bootstrap.css'}">
+    <!--引入JQuery的webjars中的js脚本-->
+    <script type="text/javascript" th:src="@{'/webjars/jquery/jquery.min.js'}"></script>
+    <!--引入Bootstrap的webjars中的js脚本-->
+    <script type="text/javascript" th:src="@{'/webjars/bootstrap/js/bootstrap.bundle.min.js'}"></script>
+    <!--引入Popper的webjars中的js脚本-->
+    <script type="text/javascript" th:src="@{'/webjars/popper/js/umd/popper.min.js'}"></script>
+
+</head>
+<body>
+<div class="container">
+  <img alt="学前识字" th:src="@{/XueQianShiZi_Logo.png}" src="/XueQianShiZi_Logo.png">
+  <form method="post" th:action="@{/addUser}">
+    <div class="form-group row">
+      <label for="name" class="col-sm-3 col-form-label">用户名：</label>
+      <div class="col-sm-7">
+        <input type="text" id="name" name="name"
+               class="form-control" placeholder="输入用户名">
+      </div>
+      <div class="col-sm-2">
+        <span th:if="${user!=null}" th:errors="${user.name}" class="text-danger">输入错误提示</span>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="password" class="col-sm-3 col-form-label">密码：</label>
+      <div class="col-sm-7">
+        <input type="password" id="password" name="password"
+               class="form-control" placeholder="输入密码">
+      </div>
+      <div class="col-sm-2">
+        <span th:if="${user!=null}" th:errors="${user.password}" class="text-danger">输入错误提示</span>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-12 text-center">
+        <button type="submit" class="btn btn-success">提交注册</button>
+        <button type="reset" class="btn btn-danger">重设</button>
+      </div>
+    </div>
+    <div class="alert alert-danger" th:if="${failure!=null}" th:text="${failure}">
+      失败提示信息
+    </div>
+    <div class="alert alert-primary" th:if="${success!=null}" th:text="${success}">
+      成功提示信息
+    </div>
+    <a th:href="@{/loginForm}">登录页面</a>
+  </form>
+</div>
+</body>
+</html>

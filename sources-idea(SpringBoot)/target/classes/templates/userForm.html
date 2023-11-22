@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!--导入bootstrap的webjars中的css样式-->
+    <link rel="stylesheet" th:href="@{'/webjars/bootstrap/css/bootstrap.css'}">
+    <!--引入JQuery的webjars中的js脚本-->
+    <script type="text/javascript" th:src="@{'/webjars/jquery/jquery.min.js'}"></script>
+    <!--引入Bootstrap的webjars中的js脚本-->
+    <script type="text/javascript" th:src="@{'/webjars/bootstrap/js/bootstrap.bundle.min.js'}"></script>
+    <!--引入Popper的webjars中的js脚本-->
+    <script type="text/javascript" th:src="@{'/webjars/popper/js/umd/popper.min.js'}"></script>
+
+    <!--JavaScript函数，控制元素的显示和隐藏-->
+    <script type="text/javascript">
+        function toggle(id){
+            console.log(id);
+            var tb = document.getElementById(id);
+            // 检查元素是否存在
+            if (!tb) {
+                console.error('No element with id: ' + id);
+                return;
+            }
+            // 更健壮的检查方式，考虑元素当前的display值
+            var currentDisplay = tb.style.display;
+            tb.style.display = (currentDisplay === 'none' || currentDisplay === '') ? 'block' : 'none';
+        }
+    </script>
+    <title>个人中心</title>
+</head>
+<body>
+<div class="container">
+    <img alt="学前识字" th:src="@{/XueQianShiZi_Logo.png}" src="/XueQianShiZi_Logo.png">
+    <!--控制器传过来的参数引用${session.currentUserName}-->
+    <div class="text-info"> <span th:text="${session.currentUserName}">
+        用户名</span>，欢迎进入个人中心
+    </div><br>
+    <a th:href="@{/read}">识字页面</a><br>
+    <a th:href="@{/logout}" >退出登录</a><br>
+    <div class="form-group row">
+        <form method="get" th:action="@{/knownWords}">
+            <button type="submit" >已经认识</button>
+        </form>
+        <form method="get" th:action="@{/unknownWords}">
+            <button type="submit" >不认识</button>
+        </form>
+    </div>
+    <span th:text="${flag}">认识</span>
+    <span th:text="${count}">数量</span>
+    <!-- 此处需要迭代、显示所有生字 -->
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">序号</th>
+            <th scope="col">前次记录时间</th>
+            <th scope="col">拼音</th>
+            <th scope="col">生字</th>
+            <th scope="col">修改认识状态</th>
+            <th scope="col">复习</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--th:each 循环迭代-->
+        <tr th:each="word:${words}">
+            <td th:text="${word.id}">序号</td>
+            <td scope="col"></td>
+            <td scope="col" width="150">
+                <div style="cursor:pointer" onclick="'toggle(\'${word.id}\')'">
+                    <b>点击显示拼音</b>
+                </div>
+                <div th:id="${word.id}" style="display:none; font-size:80px"
+                     th:text="${word.name.substring(1)}">拼音
+                </div>
+            </td>
+
+            <td scope="col" style="font-size:200px;color:green;
+                text-algn:center;font-family:黑体"
+                th:text="${word.name.substring(0,1)}">生字</td>
+            <td scope="col">
+                <div class="col-sm-12 text-center">
+                    <form method="post" th:action="@{/updateKnownStatus/{id}(id=${word.id})}">
+                        <button type="submit" class="btn btn-danger">
+                            修改为：<span th:text="${status}">状态</span></button>
+                    </form>
+                </div>
+            </td>
+            <td scope="col">
+                <div class="col-sm-12 text-center">
+                    <form method="post" th:action="@{/updateDate/{id}(id=${word.id})}">
+                        <button type="submit" class="btn btn-success">已复习</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

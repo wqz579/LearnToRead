@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!--导入bootstrap的webjars中的css样式-->
+    <link rel="stylesheet" th:href="@{'/webjars/bootstrap/css/bootstrap.css'}">
+    <!--引入JQuery的webjars中的js脚本-->
+    <script type="text/javascript" th:src="@{'/webjars/jquery/jquery.min.js'}"></script>
+    <!--引入Bootstrap的webjars中的js脚本-->
+    <script type="text/javascript" th:src="@{'/webjars/bootstrap/js/bootstrap.bundle.min.js'}"></script>
+    <!--引入Popper的webjars中的js脚本-->
+    <script type="text/javascript" th:src="@{'/webjars/popper/js/umd/popper.min.js'}"></script>
+
+    <script type=text/javascript>
+        <!--用于控制拼音的显示和隐藏-->
+        function toggle(id){
+            var tb=document.getElementById(id);
+            tb.style.display=(tb.style.display=='none')?'block':'none';
+        }
+    </script>
+    <title>识字页面</title>
+</head>
+<body>
+<div class="container">
+    <img alt="学前识字" th:src="@{/XueQianShiZi_Logo.png}" src="/XueQianShiZi_Logo.png">
+    <div class="text-info"> <span th:text="${session.currentUserName}">
+        用户名 </span>，欢迎您，登录成功！
+    </div><br>
+    <a th:href="@{/userForm}" >个人中心</a><br>
+    <a th:href="@{/logout}" >退出登录</a><br>
+    <span th:text="${flag}">不认识</span>
+    <span th:text="${count}">数量</span>
+    <!-- 此处需要迭代、显示所有生字 -->
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">拼音</th>
+            <th scope="col">生字</th>
+            <th scope="col">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="word:${words}">
+            <td scope="col" width="150">
+                <div style="cursor:hand" onclick="toggle('pinyin'+${word.id})">
+                    <b>拼音</b></div>
+                <div th:id="'pinyin'+${word.id}" style="display:none;font-size:80px"
+                     th:text="${word.name.substring(1)}">拼音
+                </div>
+            </td>
+            <td scope="col" width="220" style="font-size:200px;
+                color:green;text-algn:center;font-family:黑体"
+                th:text="${word.name.substring(0,1)}">汉字</td>
+            <td scope="col" width="100">
+                <form method="post" th:action="@{/insertKnownChars/{id}(id=${word.id})}">
+                    <button type="submit" class="btn btn-success">认识</button>
+                </form>
+                <form method="post" th:action="@{/insertUnknownChars/{id}(id=${word.id})}">
+                    <button type="submit" class="btn btn-danger">不认识</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

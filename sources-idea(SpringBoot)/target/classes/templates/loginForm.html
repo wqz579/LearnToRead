@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>登录页面</title>
+    <!--导入bootstrap的webjars中的css样式-->
+    <link rel="stylesheet" th:href="@{'/webjars/bootstrap/css/bootstrap.css'}">
+    <!--引入JQuery的webjars中的js脚本-->
+    <script type="text/javascript" th:src="@{'/webjars/jquery/jquery.min.js'}"></script>
+    <!--引入Bootstrap的webjars中的js脚本-->
+    <script type="text/javascript" th:src="@{'/webjars/bootstrap/js/bootstrap.bundle.min.js'}"></script>
+    <!--引入Popper的webjars中的js脚本-->
+    <script type="text/javascript" th:src="@{'/webjars/popper/js/umd/popper.min.js'}"></script>
+
+</head>
+<body>
+<div class="container">
+    <!--静态资源引用，引用图片-->
+    <img alt="学前识字" th:src="@{/XueQianShiZi_Logo.png}" src="/XueQianShiZi_Logo.png">
+    <!--表格提交请求-->
+    <form method="post" th:action="@{/login}">
+        <div class="form-group row">
+            <!--label: 标签-->
+            <label for="name" class="col-sm-3 col-form-label">用户名：</label>
+            <div class="col-sm-7">
+                <!--input：输入框-->
+                <!--placeholder: 框内提示效果-->
+                <input type="text" id="name" name="name"
+                       class="form-control" placeholder="输入用户名">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="password" class="col-sm-3 col-form-label">密码：</label>
+            <div class="col-sm-7">
+                <input type="password" id="password" name="password"
+                       class="form-control" placeholder="输入密码">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="vercode" class="col-sm-3 col-form-label">验证码：</label>
+            <div class="col-sm-2">
+                <input type="text" id="vercode" name="vercode"
+                       class="form-control" placeholder="输入验证码">
+            </div>
+            <div class="col-sm-2">
+                <!--引用图片请求，VercodeController里面有GetMapping请求/vercode-->
+                <img th:src="@{/vercode}" alt="验证码">
+            </div>
+            <div class="col-sm-5">
+                <label for="vercode" class="col-sm-5 col-form-label">区分大小写</label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-12 text-center">
+                <button type="submit" class="btn btn-success">登录</button>
+                <button type="reset" class="btn btn-danger">重设</button>
+            </div>
+        </div>
+        <div class="form-group row">
+            <!--a: 超链接请求-->
+            <a th:href="@{/register}">注册页面</a>
+        </div>
+    </form>
+    <div class="alert alert-danger" th:if="${tip!=null}" th:text="${tip}">
+            提示信息
+    </div>
+</div>
+</body>
+</html>
